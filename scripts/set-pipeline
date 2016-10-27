@@ -1,0 +1,34 @@
+#!/bin/bash -eu
+
+# We generally assume that postgres-ci-env is cloned to ../postgres-ci-env
+
+function grab() {
+  local key=${1:?"Missing key to grab"}
+  local deployment=../postgres-ci-env/deployments/concourse/concourse.yml
+  grep "${key}" "${deployment}" | awk '{split($0,a,": "); print a[2]}'
+}
+
+function login() {
+  fly \
+      --target pgci \
+    login  \
+      --concourse-url=https://postgres.ci.cf-app.com/ \
+      --username="$(grab basic_auth_username)" \
+      --password="$(grab basic_auth_password)"
+}
+
+function set-pipeline(){
+  fly \
+      --target pgci \
+    set-pipeline \
+      --pipeline=postgres \
+      --config=ci/pipelines/postgres.yml \
+      --load-vars-from=../postgres-ci-env/pipeline_vars/postgres.yml
+}
+
+function main(){
+  login
+  set-pipeline
+}
+
+main "${PWD}"
