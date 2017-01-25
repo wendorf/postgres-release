@@ -12,7 +12,7 @@ inputs:
 - name: dev-release
 
 outputs:
-- name: dev-release-tarball
+- name: dev-release-tarballs
 
 run:
   path: postgres-release/ci/scripts/create-dev-release-tarball/task.sh

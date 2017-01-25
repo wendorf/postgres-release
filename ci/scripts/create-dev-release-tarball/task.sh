@@ -18,7 +18,7 @@ function main(){
 
   pushd ${root}/dev-release
   bosh -t ${BOSH_DIRECTOR} create release --force --with-tarball --version "${REL_VERSION}" --name "${REL_NAME}"
-  cp dev_releases/${REL_NAME}/${REL_NAME}-${REL_VERSION}.tgz ${root}/dev-release-tarball
+  cp dev_releases/${REL_NAME}/${REL_NAME}-${REL_VERSION}.tgz ${root}/dev-release-tarballs
   popd
 }
 
