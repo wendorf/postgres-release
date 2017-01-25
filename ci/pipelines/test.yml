@@ -43,6 +43,7 @@ jobs:
   - task: create-postgres-dev-release-tarball
     file: postgres-release/ci/scripts/create-dev-release-tarball/task.yml
     input_mapping: {dev-release: postgres-release}
+    output_mapping: {dev-release-tarball: postgres-tarball}
     params:
       <<: *bosh_params_fresh
       REL_NAME: postgres
@@ -50,19 +51,38 @@ jobs:
   - task: create-cf-dev-release-tarball
     file: postgres-release/ci/scripts/create-dev-release-tarball/task.yml
     input_mapping: {dev-release: cf-release}
+    output_mapping: {dev-release-tarball: cf-tarball}
     params:
       <<: *bosh_params_fresh
       REL_NAME: cf
       REL_VERSION: v999+dev.1
-  - task: upload-dev-releases-fresh
+  - task: upload-postgres-dev-releases-fresh
     file: postgres-release/ci/scripts/upload-dev-release-tarball/task.yml
+    input_mapping: {dev-release-tarball: postgres-tarball}
     params:
       <<: *bosh_params_fresh
-  - task: upload-dev-releases-old
+  - task: upload-cf-dev-releases-fresh
     file: postgres-release/ci/scripts/upload-dev-release-tarball/task.yml
+    input_mapping: {dev-release-tarball: cf-tarball}
+    params:
+      <<: *bosh_params_fresh
+  - task: upload-postgres-dev-releases-old
+    file: postgres-release/ci/scripts/upload-dev-release-tarball/task.yml
+    input_mapping: {dev-release-tarball: postgres-tarball}
     params:
       <<: *bosh_params_old
-  - task: upload-dev-releases-older
+  - task: upload-cf-dev-releases-old
     file: postgres-release/ci/scripts/upload-dev-release-tarball/task.yml
+    input_mapping: {dev-release-tarball: cf-tarball}
+    params:
+      <<: *bosh_params_old
+  - task: upload-postgres-dev-releases-older
+    file: postgres-release/ci/scripts/upload-dev-release-tarball/task.yml
+    input_mapping: {dev-release-tarball: postgres-tarball}
+    params:
+      <<: *bosh_params_older
+  - task: upload-cf-dev-releases-older
+    file: postgres-release/ci/scripts/upload-dev-release-tarball/task.yml
+    input_mapping: {dev-release-tarball: cf-tarball}
     params:
       <<: *bosh_params_older

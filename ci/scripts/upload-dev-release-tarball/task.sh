@@ -16,7 +16,7 @@ function main(){
   bosh login ${BOSH_USER} ${BOSH_PASSWORD}
   set -x
 
-  pushd ${root}/dev-release-tarballs
+  pushd ${root}/dev-release-tarball
   for file in *.tgz
   do
     echo loading release "$file"
