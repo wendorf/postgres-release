@@ -9,7 +9,7 @@ resources:
   type: git
   source:
     uri: https://github.com/cloudfoundry/postgres-release.git
-    branch: develop
+    branch: upgrade-pipeline
 
 jobs:
 - name: upload-stemcells-releases
@@ -54,15 +54,15 @@ jobs:
       <<: *bosh_params_fresh
       REL_NAME: cf
       REL_VERSION: v999+dev.1
-  - task: upload-dev-release-fresh
+  - task: upload-dev-releases-fresh
     file: postgres-release/ci/scripts/upload-dev-release-tarball/task.yml
     params:
       <<: *bosh_params_fresh
-  - task: upload-dev-release-old
+  - task: upload-dev-releases-old
     file: postgres-release/ci/scripts/upload-dev-release-tarball/task.yml
     params:
       <<: *bosh_params_old
-  - task: upload-dev-release-older
+  - task: upload-dev-releases-older
     file: postgres-release/ci/scripts/upload-dev-release-tarball/task.yml
     params:
       <<: *bosh_params_older
